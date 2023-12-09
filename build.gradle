@@ -15,6 +15,8 @@ dependencies {
 
     implementation 'com.github.rvesse:airline:3.0.0'
     implementation 'org.beryx:text-io:3.4.1'
+    implementation 'com.recombee:api-client:4.1.0'
+    implementation 'com.google.guava:guava:32.0.1-jre'
 }
 
 test {

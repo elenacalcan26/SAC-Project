@@ -1,10 +1,13 @@
 package commands;
 
 import com.github.rvesse.airline.annotations.Command;
+import com.recombee.api_client.exceptions.ApiException;
 import org.apache.commons.lang3.StringUtils;
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
+import recombee.RecombeeClientWrapper;
 import utils.GenresEnum;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +19,8 @@ import java.util.stream.Collectors;
 public class UserRegisterCommand implements Runnable {
   private TextIO textIO = TextIoFactory.getTextIO();
 
+  private RecombeeClientWrapper clientWrapper = RecombeeClientWrapper.getInstance();
+
   @Override
   public void run() {
     registerUser();
@@ -25,7 +30,11 @@ public class UserRegisterCommand implements Runnable {
     String username = getUsername();
     List<String> genres = new ArrayList<>(getUserFavoriteGenres());
 
-    System.out.println(username + " favorite genres: " + genres);
+    try {
+      clientWrapper.registerUserRecombee(username, genres);
+    } catch (ApiException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   private String getUsername() {
