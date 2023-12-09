@@ -1,5 +1,10 @@
+import com.github.rvesse.airline.Cli;
+import commands.RecommenderCli;
+
 public class Main {
   public static void main(String[] args) {
-    System.out.println("SAC-Project");
+    Cli<Runnable> cli = new Cli<>(RecommenderCli.class);
+    Runnable cmd = cli.parse(args);
+    cmd.run();
   }
 }
