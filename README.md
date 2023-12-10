@@ -24,9 +24,9 @@ Simple CLI Tool of a Movie Recommendation System with Recombee
 
     ./recommender_tool.sh user-interaction view --userId [userId-from-recombee-users-db] --movieId [itemId-from-recombee-items-db]
 
-### Bookmark Movie
+#### Bookmark Movie
     ./recommender_tool.sh user-interaction bookmark --userId [userId-from-recombee-users-db] --movieId [itemId-from-recombee-items-db]
 
-### Rate Movie
+#### Rate Movie
 
     ./recommender_tool.sh user-interaction view --userId [userId-from-recombee-users-db] --movieId [itemId-from-recombee-items-db] --rating [double-data-type-value]
