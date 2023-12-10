@@ -2,6 +2,8 @@ package recombee;
 
 import com.google.common.collect.ImmutableMap;
 import com.recombee.api_client.RecombeeClient;
+import com.recombee.api_client.api_requests.AddDetailView;
+import com.recombee.api_client.api_requests.RecommendItemsToItem;
 import com.recombee.api_client.api_requests.RecommendItemsToUser;
 import com.recombee.api_client.api_requests.SetUserValues;
 import com.recombee.api_client.bindings.Recommendation;
@@ -52,6 +54,26 @@ public class RecombeeClientWrapper {
 
     logger.info("These are your recommendation!");
     recommendations.forEach(this::printMovieRecommendation);
+  }
+
+  public void viewMovieItem(String userId, String itemId) throws ApiException {
+    logger.info("User " + userId + " views movie with id = " + itemId);
+
+    client.send(new AddDetailView(userId, itemId)
+        .setCascadeCreate(true));
+
+    logger.info("Action added to Recombee System!");
+  }
+
+  public void showSimilarMoviesToTheViewedMovie(String userId, String movieId) throws ApiException {
+    logger.info("Showing similar movies to movie = " + movieId + " to user " + userId);
+
+    RecommendationResponse response = client.send(new RecommendItemsToItem(movieId, userId, 5)
+        .setCascadeCreate(true)
+        .setReturnProperties(true));
+
+    logger.info("You may also like to view:");
+    response.forEach(this::printMovieRecommendation);
   }
 
   private void printMovieRecommendation(Recommendation recommendation) {
