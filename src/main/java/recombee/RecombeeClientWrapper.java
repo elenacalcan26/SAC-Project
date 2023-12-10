@@ -2,10 +2,7 @@ package recombee;
 
 import com.google.common.collect.ImmutableMap;
 import com.recombee.api_client.RecombeeClient;
-import com.recombee.api_client.api_requests.AddDetailView;
-import com.recombee.api_client.api_requests.RecommendItemsToItem;
-import com.recombee.api_client.api_requests.RecommendItemsToUser;
-import com.recombee.api_client.api_requests.SetUserValues;
+import com.recombee.api_client.api_requests.*;
 import com.recombee.api_client.bindings.Recommendation;
 import com.recombee.api_client.bindings.RecommendationResponse;
 import com.recombee.api_client.exceptions.ApiException;
@@ -74,6 +71,14 @@ public class RecombeeClientWrapper {
 
     logger.info("You may also like to view:");
     response.forEach(this::printMovieRecommendation);
+  }
+
+  public void bookmarkMovie(String userId, String movieId) throws ApiException {
+    logger.info("User " + userId + " bookmarks movie with id " + movieId);
+
+    client.send(new AddBookmark(userId, movieId).setCascadeCreate(true));
+
+    logger.info("Bookmark Success!");
   }
 
   private void printMovieRecommendation(Recommendation recommendation) {
