@@ -81,6 +81,14 @@ public class RecombeeClientWrapper {
     logger.info("Bookmark Success!");
   }
 
+  public void rateMovie(String userId, String movieId, Double rating) throws ApiException {
+    logger.info("User " + userId + " gives a rating = " + rating + " to the movie with id " + rating);
+
+    client.send(new AddRating(userId, movieId, rating).setCascadeCreate(true));
+
+    logger.info("Rating Success!");
+  }
+
   private void printMovieRecommendation(Recommendation recommendation) {
     Map<String, Object> movieData = recommendation.getValues();
     System.out.print("id = " + recommendation.getId() + " | ");
