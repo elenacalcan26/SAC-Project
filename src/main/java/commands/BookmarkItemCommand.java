@@ -6,12 +6,14 @@ import javax.inject.Inject;
 
 @Command(
     name = "bookmark",
-    description = "Bookmark item user interaction"
+    description = "Bookmark item user action"
 )
 public class BookmarkItemCommand implements Runnable {
-  @Inject CommonCommandOptions commonOptions;
+  @Inject
+  CommonCommandOptions commonOptions;
 
-  @Inject InteractionCommonCommandOptions interactionCommonOptions;
+  @Inject
+  InteractionCommonCommandOptions interactionCommonOptions;
 
   @Override
   public void run() {
