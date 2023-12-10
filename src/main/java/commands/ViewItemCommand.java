@@ -2,8 +2,6 @@ package commands;
 
 import com.github.rvesse.airline.annotations.Command;
 import com.recombee.api_client.exceptions.ApiException;
-import org.beryx.textio.TextIO;
-import org.beryx.textio.TextIoFactory;
 import recombee.RecombeeClientWrapper;
 
 import javax.inject.Inject;
