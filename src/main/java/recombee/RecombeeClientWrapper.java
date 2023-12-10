@@ -2,8 +2,10 @@ package recombee;
 
 import com.google.common.collect.ImmutableMap;
 import com.recombee.api_client.RecombeeClient;
-import com.recombee.api_client.api_requests.SetItemValues;
+import com.recombee.api_client.api_requests.RecommendItemsToUser;
 import com.recombee.api_client.api_requests.SetUserValues;
+import com.recombee.api_client.bindings.Recommendation;
+import com.recombee.api_client.bindings.RecommendationResponse;
 import com.recombee.api_client.exceptions.ApiException;
 
 import java.util.HashSet;
@@ -40,5 +42,23 @@ public class RecombeeClientWrapper {
         .setCascadeCreate(true));
 
     logger.info("Register done!");
+  }
+
+  public void recommendMoviesToUser(String userId) throws ApiException {
+    logger.info("Recommending movies to user with id = " + userId);
+    RecommendationResponse recommendations = client.send(
+        new RecommendItemsToUser(userId, 10)
+            .setReturnProperties(true));
+
+    logger.info("These are your recommendation!");
+    recommendations.forEach(this::printMovieRecommendation);
+  }
+
+  private void printMovieRecommendation(Recommendation recommendation) {
+    Map<String, Object> movieData = recommendation.getValues();
+    System.out.print("id = " + recommendation.getId() + " | ");
+    System.out.print("Title = " + movieData.get("title") + " | ");
+    System.out.print("Genres = " + movieData.get("genre") + " | ");
+    System.out.println("Actors = " + movieData.get("actors"));
   }
 }
