@@ -7,10 +7,12 @@ import com.recombee.api_client.bindings.Recommendation;
 import com.recombee.api_client.bindings.RecommendationResponse;
 import com.recombee.api_client.exceptions.ApiException;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class RecombeeClientWrapper {
   private static String DB_NAME = "acs-sac-dev";
@@ -45,6 +47,7 @@ public class RecombeeClientWrapper {
 
   public void recommendMoviesToUser(String userId) throws ApiException {
     logger.info("Recommending movies to user with id = " + userId);
+
     RecommendationResponse recommendations = client.send(
         new RecommendItemsToUser(userId, 10)
             .setReturnProperties(true));
@@ -87,6 +90,25 @@ public class RecombeeClientWrapper {
     client.send(new AddRating(userId, movieId, rating).setCascadeCreate(true));
 
     logger.info("Rating Success!");
+  }
+
+  public void recommendMoviesToUserActorPreference(String userId, List<String> actors) throws ApiException {
+    logger.info("Recommending movies to user with id = " + userId + " based on actors: " + actors);
+
+    assert actors != null;
+    String actorFilter = actors.stream()
+            .map(actor -> "\"" + actor + "\" in 'actors'")
+            .collect(Collectors.joining(" OR "));
+
+    System.out.println(actorFilter);
+
+    RecommendationResponse recommendations = client.send(
+            new RecommendItemsToUser(userId, 10)
+                    .setFilter(actorFilter)
+                    .setReturnProperties(true));
+
+    logger.info("These are your recommendations!");
+    recommendations.forEach(this::printMovieRecommendation);
   }
 
   private void printMovieRecommendation(Recommendation recommendation) {
