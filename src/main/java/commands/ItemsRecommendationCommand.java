@@ -5,7 +5,9 @@ import com.recombee.api_client.exceptions.ApiException;
 import recombee.RecombeeClientWrapper;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,19 +29,14 @@ public class ItemsRecommendationCommand implements Runnable {
   public void run() {
     String userId = commonOptions.userId;
 
-    List<String> actors = null;
+    String actors = null;
     if (interactionCommonCommandOptions != null) {
-      System.out.println(interactionCommonCommandOptions.actors);
-      actors = Arrays.stream(interactionCommonCommandOptions.actors.split(","))
-              .map(String::trim)
-              .collect(Collectors.toList());
-
-      System.out.println("Actors: " + actors);
+      actors = String.join(" ", interactionCommonCommandOptions.actors);
     }
 
     try {
       if (actors != null)
-      clientWrapper.recommendMoviesToUserActorPreference(userId, actors);
+      clientWrapper.recommendMoviesToUserActorPreference(userId, new ArrayList<>(Collections.singleton(actors)));
       else
         clientWrapper.recommendMoviesToUser(userId);
     } catch (ApiException e) {

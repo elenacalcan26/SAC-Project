@@ -15,6 +15,6 @@ public class InteractionCommonCommandOptions {
   @Option(
           name = "--actors",
           description = "List of actors to star in the movie",
-          arity = 1)
-  String actors;
+          arity = 2)
+  List<String> actors;
 }
