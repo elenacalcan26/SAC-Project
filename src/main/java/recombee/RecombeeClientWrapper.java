@@ -113,9 +113,12 @@ public class RecombeeClientWrapper {
 
   private void printMovieRecommendation(Recommendation recommendation) {
     Map<String, Object> movieData = recommendation.getValues();
-    System.out.print("id = " + recommendation.getId() + " | ");
-    System.out.print("Title = " + movieData.get("title") + " | ");
-    System.out.print("Genres = " + movieData.get("genre") + " | ");
+
+    System.out.println("*******************************");
+    System.out.print("id = " + recommendation.getId() + "\n");
+    System.out.print("Title = " + movieData.get("title") + "\n");
+    System.out.print("Genres = " + movieData.get("genre") + "\n");
     System.out.println("Actors = " + movieData.get("actors"));
+    System.out.println("*******************************");
   }
 }
