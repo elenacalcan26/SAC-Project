@@ -44,6 +44,6 @@ public class Main {
     System.out.println("3. recommend --userId [userId] --actor [actor name]");
     System.out.println("4. user-interaction view --userId [userId] --movieId [movieId]");
     System.out.println("5. user-interaction bookmark --userId [userId] --movieId [movieId]");
-    System.out.println("6. user-interaction rate --userId [userId] --movieId [movieId] --rating [rating]");
+    System.out.println("6. user-interaction rate --userId [userId] --movieId [movieId] --rate [rating]");
   }
 }
